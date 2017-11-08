@@ -1,9 +1,9 @@
 <h1>{{restaurant.restaurant_name}}</h1>
 <p>Address: {{restaurant.address}}</p>
 <p>Category: {{restaurant.category}}</p>
-{{#if reviews}}
+{{#if review}}
   <h2>Reviews</h2>
-  {{#each reviews}}
+  {{#each review}}
     <h3>{{title}}</h3>
     <p>Author: {{reviewer_name}}</p>
     <p>Stars: {{stars}}</p>

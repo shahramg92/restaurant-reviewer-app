@@ -41,18 +41,35 @@ app.get('/search', function(request, response, next) {
 
 app.get('/restaurant/:id', function( request, response, next) {
   let id = request.params.id;
-  
-
-
-
-
-
-
-
-
-})
-
-
+  db.any(`
+    SELECT
+      reviewer.name as reviewer_name,
+      review.title,
+      review.stars,
+      review.review
+    FROM restaurant
+    INNER JOIN
+      review on review.restaurant_id = restaurant.id
+    INNER JOIN
+      reviewer on review.reviewer_id = reviewer.id
+    where restaurant.id = ${id}
+  `)
+    .then(function(review) {
+      return [
+        review,
+        db.one(`
+          SELECT name AS restaurant_name, * FROM restaurant
+          WHERE id = ${id}`)
+      ];
+    })
+    .spread(function(review, restaurant) {
+      response.render('restaurant.hbs', {
+        restaurant:restaurant,
+        review:review
+      });
+    })
+    .catch(next);
+});
 
 
 
