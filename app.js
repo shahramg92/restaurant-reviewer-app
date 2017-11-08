@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 
 const promise = require('bluebird');
 const pgp = require('pg-promise')({promiseLib: promise});
-const db = pgp({database: 'todo'});
+const db = pgp({database: 'restaurant2'});
 
 // Handlebars setup
 app.set('view engine', 'hbs');
@@ -16,29 +16,41 @@ app.set('view engine', 'hbs');
 app.use('/static', express.static('public'));
 
 // Body Parser Middleware
-app.use(body_parser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: false}));
 
 
 app.get('/', function (request, response) {
   response.render('search_form.hbs');
 });
 
-app.get('/search', function(request, response) {
+app.get('/search', function(request, response, next) {
   let term = request.query.searchTerm;
-  console.log('Term', term);
+  console.log('Term:', term);
   db.any(`
-    SELECT * FROM RESTAURANT
-    WHERE RESTAURANT.NAME ILIKE '%$(term)'
+    SELECT * FROM restaurant
+    WHERE restaurant.name ILIKE '%$(term)%'
     `)
-    .then(function(resultsArray {
+    .then(function(resultsArray) {
       console.log('results', resultsArray);
-      response.render('search_results.hbs' {
+      response.render('search_results.hbs', {
         results: resultsArray
       });
-    }));
+    })
+    .catch(next);
 });
 
+app.get('/restaurant/:id', function( request, response, next) {
+  let id = request.params.id;
+  
 
+
+
+
+
+
+
+
+})
 
 
 
