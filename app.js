@@ -84,7 +84,7 @@ app.get('/restaurant/:id', function(request, response, next) {
     .catch(next);
 });
 
-app.post('/restaurant/submit_new', function(request, response, next) {
+app.post('/restaurant/submit_new_restaurant', function(request, response, next) {
   var name = request.body.name;
   var address = request.body.address;
   var category = request.body.category;
