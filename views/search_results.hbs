@@ -1,10 +1,12 @@
+<div class='backgroundsearch'>
 <h1>Search Results</h1>
-<ul>
+<ul class='resultsList'>
   {{#each results}}
     <li>
       <a href="/restaurant/{{id}}">{{name}}</a>
-      {{address}}<br>
+      <br>{{address}}<br>
       {{category}}
     </li>
   {{/each}}
 </ul>
+</div>
