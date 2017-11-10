@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const promise = require('bluebird');
 const pgp = require('pg-promise')({promiseLib: promise});
-const db = pgp({database: 'restaurant2'});
+const db = pgp(process.env.DATABASE_URL || {database: 'restaurant2'});
 const session = require('express-session');
 const morgan = require('morgan');
 
