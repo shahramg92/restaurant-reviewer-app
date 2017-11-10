@@ -22,12 +22,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/static', express.static('public'));
 app.use(morgan('dev'));
 app.use(session({
-  app.use(session({
   secret: process.env.SECRET_KEY || 'dev',
   resave: true,
   saveUninitialized: false,
   cookie: {maxAge: 60000}
-}));
 }));
 
 
@@ -122,6 +120,11 @@ app.post('/submit_review/:restaurant_id', function(req, resp, next) {
 });
 
 
-app.listen(1337, function(request, response){
-  console.log('Access granted to port 1337')
+// app.listen(1337, function(request, response){
+//   console.log('Access granted to port 1337')
+// });
+
+var PORT = process.env.PORT || 8000;
+app.listen(PORT, function () {
+  console.log('Listening on port ' + PORT);
 });
