@@ -23,13 +23,14 @@ height: 100vh
 
 
 
-body {
+html, body {
   text-align: center;
-
+  margin: 0px;
+  padding: 0px
 }
 
 .search-form {
-  padding-top: 200px;
+  padding-top: 100px;
 }
 
 .search-form input,
@@ -37,7 +38,13 @@ body {
   font-size: 1.5em;
 }
 
+.search-form2 input,
+.search-form2 button {
+  font-size: 1.5em;
+}
+
 .resultsList {
   display: flex;
-  justify-content: center;  
+  justify-content: center;
+  flex-direction: column;
 }
