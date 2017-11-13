@@ -120,9 +120,6 @@ app.post('/submit_review/:restaurant_id', function(req, resp, next) {
 });
 
 
-// app.listen(1337, function(request, response){
-//   console.log('Access granted to port 1337')
-// });
 
 var PORT = process.env.PORT || 8000;
 app.listen(PORT, function () {

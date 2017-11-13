@@ -21,7 +21,18 @@ color: white;
 height: 100vh
 }
 
-
+.box_around{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+  border: 2px solid black;
+  width: 20%;
+  padding: 2em;
+  border-radius: 10px;
+  background-color: grey;
+  opacity:.9
+}
 
 html, body {
   text-align: center;
@@ -47,4 +58,6 @@ html, body {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin: 0px;
+  padding: 0px
 }
