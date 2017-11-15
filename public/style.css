@@ -38,6 +38,7 @@ height: 100vh
 @media (max-width: 566px){
   .box_around {
     margin-top: 5em;
+    width: 100%;
   }
 }
 
