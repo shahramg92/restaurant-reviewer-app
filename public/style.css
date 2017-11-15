@@ -50,7 +50,7 @@ height: 100vh
 
 @media (min-width: 768px) and (max-width: 991px) {
   .box_around {
-    margin-top: 5em;
+    margin-top: 25em;
   }
 }
 
