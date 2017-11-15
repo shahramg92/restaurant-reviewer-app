@@ -1,4 +1,5 @@
 <div class='box'>
+  <div id="login_style">
   {{#if fail}}<p class='fail'>Username and password did not match. Please try again.</p>{{/if}}
   <form action="/login" method="POST">
     <label>Username:</label>
@@ -6,9 +7,11 @@
     <br>
     <label>Password:</label>
     <input name='password' type='password'>
-    <br><br>
-    <button type="submit">Submit</button>
-  </form>
-  <a href='/create_account'>No account? Create one here.</a> <br> <br>
-  <a href='/'>Back home</a>
+    <br>
+    <button type="submit">Submit</button><br><br>
+    </form>
+  </div>
+</div>
+<div class="login_links">
+<a href='/create_account'>No account? Create one here.</a> <br> <br>
 </div>

@@ -26,13 +26,48 @@ height: 100vh
   justify-content: center;
   flex-direction: column;
   margin: auto;
+  margin-top: 25em;
   border: 2px solid black;
-  width: 20%;
+  width: 50%;
   padding: 2em;
   border-radius: 10px;
   background-color: grey;
-  opacity:.9
+  opacity:.9;
 }
+
+@media (max-width: 566px){
+  .box_around {
+    margin-top: 5em;
+  }
+}
+
+@media (min-width: 567px) and (max-width: 767px){
+  .box_around {
+    margin-top: 5em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .box_around {
+    margin-top: 5em;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .box_around {
+    margin-top: 5em;
+  }
+}
+
+@media (min-width: 1200px) {
+  .box_around {
+    margin-top: 5em;
+  }
+}
+
+
+
+
 
 html, body {
   text-align: center;
@@ -40,13 +75,19 @@ html, body {
   padding: 0px
 }
 
-.search-form {
-  padding-top: 100px;
+#create_account_style, #login_style {
+  margin-top: 20rem;
+  display: flex;
+  justify-content: center;
 }
 
 .search-form input,
 .search-form button {
   font-size: 1.5em;
+}
+
+.search_form2 {
+  padding-bottom: 75px;
 }
 
 .search-form2 input,
@@ -60,4 +101,9 @@ html, body {
   flex-direction: column;
   margin: 0px;
   padding: 0px
+}
+
+.login_links {
+  display: flex;
+  justify-content: center;
 }

@@ -28,9 +28,104 @@ app.use(session({
   cookie: {maxAge: 60000}
 }));
 
+function create_hash (password) {
+  var salt = crypto.randomBytes(20).toString('hex');
+  var key = pbkdf2.pbkdf2Sync(
+    password, salt, 36000, 256, 'sha256'
+  );
+  var hash = key.toString('hex');
+  var stored_pass = `pbkdf2_sha256$36000$${salt}$${hash}`;
+  return stored_pass;
+}
 
-app.get('/', function (request, response) {
-  response.render('search_form.hbs');
+function check_pass (stored_pass, password){
+  // checking a password
+  var pass_parts = stored_pass.split('$');
+  var key = pbkdf2.pbkdf2Sync( // make new hash
+    password,
+    pass_parts[2],
+    parseInt(pass_parts[1]),
+    256, 'sha256'
+  );
+
+  var hash = key.toString('hex');
+  if (hash === pass_parts[3]) {
+    console.log('Passwords Matched!');
+    return true
+  }
+  else {
+    console.log('No match')
+  }
+  return false;
+}
+
+app.use(function(request, response, next){
+  if(request.session.user) {
+    next();
+  } else if (request.path == '/submit_new') {
+    response.redirect('/login');
+  } else {
+    next();
+  }
+});
+
+app.get('/', function(request, response){
+  context = {title: 'Search Restaurant Reviews', user: request.session.user, anon: !request.session.user}
+  response.render('search_form.hbs', context)
+})
+
+//login page
+app.get('/login', function(request, response){
+  context = {title: 'Login'}
+  response.render('login.hbs', context)
+});
+
+//login mechanics
+app.post('/login', function(request, response) {
+  let username = request.body.username;
+  let password = request.body.password;
+  let query = "SELECT password FROM reviewer WHERE name = $1"
+  db.one(query, username)
+    .then (function(stored_pass){
+      // hash user input
+      return check_pass(stored_pass.password, password)
+    })
+    .then (function(pass_success){
+      if (pass_success) {
+        request.session.user = username;
+        response.redirect('/');
+      }
+      else if (!pass_success){
+        context = {title: 'Login', fail: true}
+        response.render('login.hbs', context)
+      }
+    })
+})
+
+app.get('/logout', function(request, response, next) {
+  request.session.destroy(function(err){
+    if(err){console.error('Something went wrong: '+ err);}
+    response.redirect('/');
+  });
+})
+
+app.get('/create_account', function(request, response) {
+  context = {title: 'Create account', user: request.session.user, anon: !request.session.user};
+  response.render('create_account.hbs', context)
+});
+
+app.post('/create_account', function(request, response, next){
+  let name = request.body.username;
+  let password = request.body.password;
+  let email = request.body.email;
+  let stored_pass = create_hash(password);
+  let query = 'INSERT INTO reviewer VALUES (DEFAULT, $1, $2, $3)'
+  db.none(query, [name, email, stored_pass])
+    .then(function(){
+      request.session.user = name
+      response.redirect('/');
+    })
+    .catch(function(err){next(err)})
 });
 
 app.get('/search', function(request, response, next) {
