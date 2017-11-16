@@ -26,6 +26,7 @@
     "morgan": "^1.9.0",
     "nodemon": "^1.12.1",
     "pbkdf2": "^3.0.14",
-    "pg-promise": "^7.3.1"
+    "pg-promise": "^7.3.1",
+    "zomato": "^1.1.0"
   }
 }

@@ -5,6 +5,11 @@ const pgp = require('pg-promise')({promiseLib: promise});
 const db = pgp(process.env.DATABASE_URL || {database: 'restaurant2'});
 const session = require('express-session');
 const morgan = require('morgan');
+// const client = zomato.createClient({
+//
+//   var client = zomato.createClient({
+//     userKey: 'API Token', "5db36dca76c586c0ab3ecc89f4cd85c2"
+//   });
 
 // password
 var pbkdf2 = require('pbkdf2');
