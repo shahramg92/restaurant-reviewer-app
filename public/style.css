@@ -1,24 +1,21 @@
-.backgroundhome {
+.backgroundh {
   text-align: center;
-  height: 100vh;
   background: url('/static/restaurant.jpg') no-repeat center center fixed;
-  /*background-size: contain;*/
   font-family: sans-serif;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   color: white;
+  height: 100vh;
 }
 
 .backgroundsearch {
 background: url('/static/chalkboard.jpg') no-repeat center center fixed;
-/*background-size: contain;*/
 font-family: sans-serif;
 -webkit-background-size: cover;
 -moz-background-size: cover;
 -o-background-size: cover;
 color: white;
-height: 100vh
 }
 
 .box_around{
@@ -70,13 +67,14 @@ height: 100vh
 html, body {
   text-align: center;
   margin: 0px;
-  padding: 0px
+  padding: 0px;
 }
 
 #create_account_style, #login_style {
   margin-top: 20rem;
   display: flex;
   justify-content: center;
+  /*background: url('/static/backgroundforpages.jpg') no-repeat center center fixed;*/
 }
 
 .search-form input,

@@ -5,11 +5,13 @@ const pgp = require('pg-promise')({promiseLib: promise});
 const db = pgp(process.env.DATABASE_URL || {database: 'restaurant2'});
 const session = require('express-session');
 const morgan = require('morgan');
-// const client = zomato.createClient({
-//
-//   var client = zomato.createClient({
-//     userKey: 'API Token', "5db36dca76c586c0ab3ecc89f4cd85c2"
-//   });
+const axios = require('axios');
+const api = axios.create({
+  baseURL: 'https://developers.zomato.com/api/v2.1',
+  timeout: 1000,
+  headers: {'user-key': '5db36dca76c586c0ab3ecc89f4cd85c2'}
+});
+
 
 // password
 var pbkdf2 = require('pbkdf2');
@@ -136,18 +138,31 @@ app.post('/create_account', function(request, response, next){
 app.get('/search', function(request, response, next) {
   let term = request.query.searchTerm;
   console.log('Term:', term);
-  db.any(`
-    SELECT * FROM restaurant
-    WHERE restaurant.name ILIKE '%$1#%'
-    `, term)
-    .then(function(resultsArray) {
-      console.log('results', resultsArray);
-      response.render('search_results.hbs', {
-        results: resultsArray
-      });
+  api.get('/search', {
+    params: {
+      q: term
+    }
+  })
+    .then((results)=>{
+      console.log(results.data.restaurants[0])
+      context = {results: results.data.restaurants};
+      response.render('search_results2.hbs', context)
     })
-    .catch(next);
+    .catch(next)
+
+  // db.any(`
+  //   SELECT * FROM restaurant
+  //   WHERE restaurant.name ILIKE '%$1#%'
+  //   `, term)
+  //   .then(function(resultsArray) {
+  //     console.log('results', resultsArray);
+  //     response.render('search_results.hbs', {
+  //       results: resultsArray
+  //     });
+  //   })
+  //   .catch(next);
 });
+
 
 app.get('/restaurant/new', function(request, response) {
   response.render('new_restaurant.hbs')
@@ -184,6 +199,7 @@ app.get('/restaurant/:id', function(request, response, next) {
     .catch(next);
 });
 
+
 app.post('/restaurant/submit_new_restaurant', function(request, response, next) {
   var name = request.body.name;
   var address = request.body.address;
@@ -196,6 +212,7 @@ app.post('/restaurant/submit_new_restaurant', function(request, response, next) 
     })
   .catch(next);
 });
+
 
 app.post('/submit_review/:restaurant_id', function(req, resp, next) {
   var restaurant_id = req.params.restaurant_id;
@@ -218,7 +235,6 @@ app.post('/submit_review/:restaurant_id', function(req, resp, next) {
     })
     .catch((err)=>{console.error(err); next()});
 });
-
 
 
 var PORT = process.env.PORT || 8000;
